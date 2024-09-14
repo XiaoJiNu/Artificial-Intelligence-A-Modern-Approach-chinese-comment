@@ -23,6 +23,36 @@ sequential_decision_environment_3 = GridMDP([[-1.0, -0.1, -0.1, -0.1, -0.1, 0.5]
 
 
 def test_value_iteration():
+    """
+    1. ref1是什么?
+    ref1 是预先计算的效用函数参考值，它代表了在给定的 sequential_decision_environment 中，
+    价值迭代算法收敛后应该得到的理想效用函数结果。
+    
+    2. ref1怎么计算得到的?
+    
+     - 手动计算或使用验证过的算法来计算
+     - 多次运行和验证
+     - 交叉验证 
+     - 精确计算，专家审核等等
+
+    3. MDP的环境sequential_decision_environment与效用函数ref1的区别是什么?
+    sequential_decision_environment:
+        这是一个 GridMDP 对象，定义了整个 MDP 环境。
+        它描述了问题的结构，包括：
+        状态空间：3x4 的网格
+        奖励函数：每个格子的即时奖励
+        终止状态：(3, 2) 和 (3, 1)
+        值 -0.04 表示大多数状态的即时奖励（小的负值，表示每一步的成本）
+        +1 和 -1 分别表示正面和负面的终止状态奖励
+        None 表示一个障碍物或不可达的状态
+
+    ref1:
+        这是一个字典，表示每个状态的最优值函数（或效用函数）。
+        它是通过在 sequential_decision_environment 上运行价值迭代算法得到的结果。
+        每个键值对表示一个状态及其对应的长期预期奖励。
+        这些值反映了从每个状态开始，遵循最优策略能获得的预期累积奖励。 
+    
+    """
     ref1 = {
         (3, 2): 1.0, (3, 1): -1.0,
         (3, 0): 0.12958868267972745, (0, 1): 0.39810203830605462,
@@ -30,6 +60,8 @@ def test_value_iteration():
         (0, 0): 0.29543540628363629, (1, 2): 0.64958064617168676,
         (2, 0): 0.34461306281476806, (2, 1): 0.48643676237737926,
         (2, 2): 0.79536093684710951}
+    temp = value_iteration(sequential_decision_environment, .01)
+    temp1 = temp.values()
     assert sum(value_iteration(sequential_decision_environment, .01).values()) - sum(ref1.values()) < 0.0001
 
     ref2 = {

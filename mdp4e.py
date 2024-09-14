@@ -210,6 +210,7 @@ def q_value(mdp, s, a, U):
     if not a:
         return mdp.R(s)
     res = 0
+    # mdp.T(s, a) 返回一个列表，包含 (概率, 下一状态) 的元组。
     for p, s_prime in mdp.T(s, a):
         res += p * (mdp.R(s) + mdp.gamma * U[s_prime])
     return res
