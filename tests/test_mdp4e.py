@@ -115,6 +115,10 @@ def test_policy_iteration():
 
 
 def test_best_policy():
+    # best_policy() 函数的作用是根据给定的 MDP 和效用函数 U 确定最佳策略。
+    # 它返回一个从状态到最佳动作的映射。
+    # 在这里，我们首先使用 value_iteration() 计算最优效用函数，
+    # 然后将其传递给 best_policy() 来获得最优策略。
     pi = best_policy(sequential_decision_environment,
                      value_iteration(sequential_decision_environment, .01))
     assert sequential_decision_environment.to_arrows(pi) == [['>', '>', '>', '.'],

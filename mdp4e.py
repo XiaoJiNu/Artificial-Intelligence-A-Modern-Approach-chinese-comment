@@ -255,6 +255,9 @@ def best_policy(mdp, U):
 
     pi = {}
     for s in mdp.states:
+        # 对于状态s，选择使q值最大的动作作为最佳策略
+        # 使用max函数和lambda表达式，遍历所有可能的动作a
+        # 对每个动作计算q_value(mdp, s, a, U)，选择q值最大的动作
         pi[s] = max(mdp.actions(s), key=lambda a: q_value(mdp, s, a, U))
     return pi
 
