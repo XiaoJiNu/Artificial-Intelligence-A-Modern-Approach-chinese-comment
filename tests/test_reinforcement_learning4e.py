@@ -59,7 +59,7 @@ def test_QLearning():
     for i in range(200):
         run_single_trial(q_agent, sequential_decision_environment)
 
-    # Agent does not always produce same results.
+    # Agent does not always produce same results. 123  
     # Check if results are good enough.
     assert q_agent.Q[((0, 1), (0, 1))] >= -0.5  # In reality around 0.1
     assert q_agent.Q[((1, 0), (0, -1))] <= 0.5  # In reality around -0.1

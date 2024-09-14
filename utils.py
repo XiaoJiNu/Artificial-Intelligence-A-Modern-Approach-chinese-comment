@@ -1,4 +1,4 @@
-"""Provides some utilities widely used by other modules"""
+"""Provides some utilities widely used by other modules """
 
 import bisect
 import collections

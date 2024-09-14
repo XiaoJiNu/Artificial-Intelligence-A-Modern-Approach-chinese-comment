@@ -145,6 +145,11 @@ class GridMDP(MDP):
                     states.add((x, y))
                     reward[(x, y)] = grid[y][x]
         self.states = states
+        # actlist解释如下
+        # (1, 0): 向右移动（x坐标+1，y坐标不变）
+        # (0, 1): 向上移动（x坐标不变，y坐标+1）
+        # (-1, 0): 向左移动（x坐标-1，y坐标不变）
+        # (0, -1): 向下移动（x坐标不变，y坐标-1）
         actlist = orientations
         transitions = {}
         for s in states:
@@ -200,7 +205,7 @@ sequential_decision_environment = GridMDP([[-0.04, -0.04, -0.04, +1],
 # ______________________________________________________________________________
 # 16.1.3 The Bellman equation for utilities
 
-
+# 对应第4版公式17-8，q值表示在状态s下指执行动作a的期望效用，也就量折扣奖励的和
 def q_value(mdp, s, a, U):
     if not a:
         return mdp.R(s)
@@ -220,16 +225,21 @@ def q_value(mdp, s, a, U):
 def value_iteration(mdp, epsilon=0.001):
     """Solving an MDP by value iteration. [Figure 16.6]"""
 
+    # 初始化所有状态的效用值为0
     U1 = {s: 0 for s in mdp.states}
+    # 获取MDP的奖励函数、转移函数和折扣因子
     R, T, gamma = mdp.R, mdp.T, mdp.gamma
     while True:
+        # 复制当前的效用值
         U = U1.copy()
+        # 初始化最大变化量
         delta = 0
         for s in mdp.states:
-            # U1[s] = R(s) + gamma * max(sum(p * U[s1] for (p, s1) in T(s, a))
-            #                            for a in mdp.actions(s))
+            # 计算新的效用值，使用q_value函数
             U1[s] = max(q_value(mdp, s, a, U) for a in mdp.actions(s))
+            # 更新最大变化量
             delta = max(delta, abs(U1[s] - U[s]))
+        # 检查是否达到收敛条件
         if delta <= epsilon * (1 - gamma) / gamma:
             return U
 

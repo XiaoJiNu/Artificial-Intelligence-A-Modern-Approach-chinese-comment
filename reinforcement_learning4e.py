@@ -7,7 +7,7 @@ from mdp4e import MDP, policy_evaluation
 
 
 # _________________________________________
-# 21.2 Passive Reinforcement Learning
+# 21.2 Passive Reinforcement Learning 
 # 21.2.1 Direct utility estimation
 
 
@@ -331,7 +331,7 @@ def run_single_trial(agent_program, mdp):
 
     def take_single_action(mdp, s, a):
         """
-        Select outcome of taking action a
+        Select outcome of takinion a
         in state s. Weighted Sampling.
         """
         x = random.uniform(0, 1)
