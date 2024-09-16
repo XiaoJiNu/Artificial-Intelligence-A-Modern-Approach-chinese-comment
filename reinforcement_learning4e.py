@@ -321,10 +321,15 @@ class QLearningAgent:
             return self.all_act
 
     def __call__(self, percept):
-        # 处理感知并返回下一个动作
+        # __call__实现的事情：基于感知结果更新Q值，最后返回下一个动作
+
+        # 更新状态和奖励
         s1, r1 = self.update_state(percept)
+        # 获取Q值表、状态-动作访问次数、当前状态、动作和奖励
         Q, Nsa, s, a, r = self.Q, self.Nsa, self.s, self.a, self.r
+        # 获取学习率、折扣因子和终止状态集
         alpha, gamma, terminals = self.alpha, self.gamma, self.terminals,
+        # 获取获取可用动作的函数
         actions_in_state = self.actions_in_state
 
         if s in terminals:
@@ -414,7 +419,7 @@ def run_single_trial(agent_program, mdp):
             这样，我们就实现了按照给定概率随机选择下一个状态。
         
         二、 实际环境中，还需要take_single_action吗？
-            不需要，实际环境中可以和真实环境直接交互，不需要模拟。
+            不需要，实际环境中可以和真实环境直接交互，不需要模拟环境来得到下一个状态。
 
         """
         for probability_state in mdp.T(s, a):
@@ -438,5 +443,5 @@ def run_single_trial(agent_program, mdp):
         # 如果智能体返回None，表示到达终止状态，退出循环
         if next_action is None:
             break
-        # 执行选定的动作，更新当前状态
+        # 执行选定的动作，得到执行动作后的下一个状态，此处在模拟环境的交互，得到一个具体的状态。
         current_state = take_single_action(mdp, current_state, next_action)
