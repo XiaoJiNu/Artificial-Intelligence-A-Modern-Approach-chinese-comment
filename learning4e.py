@@ -463,11 +463,16 @@ class DecisionListLearner:
     """
 
     def __init__(self, dataset):
+        # 这里 self.predict 指的是类中定义的 predict 方法。
+        # .decision_list 是在这个方法上动态添加的一个属性。
+        # 这是 Python 的一个特性，允许在运行时给函数对象添加属性。
         self.predict.decision_list = self.decision_list_learning(set(dataset.examples))
 
     def decision_list_learning(self, examples):
         if not examples:
             return [(True, False)]
+        # find_examples 方法的作用是在剩余的样本中找到一个好的（通常是最佳的）测试，
+        # 该测试可以将一些样本正确分类。它返回这个测试(条件)、相关的结果(预测值)，以及被这个测试正确分类的样本集。
         t, o, examples_t = self.find_examples(examples)
         if not t:
             raise Exception
