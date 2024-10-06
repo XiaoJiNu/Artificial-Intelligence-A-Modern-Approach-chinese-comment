@@ -428,6 +428,7 @@ class DecisionTreeLearner:
 
     def choose_attribute(self, attrs, examples):
         """Choose the attribute with the highest information gain."""
+        # "从 `attrs` 中选择一个属性，使得 `self.information_gain(a, examples)` 的值最大。如果有多个属性都能达到最大信息增益，则随机选择其中一个。"
         return argmax_random_tie(attrs, key=lambda a: self.information_gain(a, examples))
 
     def information_gain(self, attr, examples):
