@@ -1043,3 +1043,6 @@ def compare(algorithms=None, datasets=None, k=10, trials=1):
 
     print_table([[a.__name__.replace('Learner', '')] + [cross_validation(a, d, k=k, trials=trials) for d in datasets]
                  for a in algorithms], header=[''] + [d.name[0:7] for d in datasets], numfmt='%.2f')
+
+
+ 
